@@ -110,11 +110,7 @@ const MyForm = () => (
 ## Why Use This Package?
 
 - **Seamless Integration**: Easily integrate Zod or Joi validation with Formik.
-
 - **Type Safety**: Built with TypeScript for better type inference and error handling.
-
 - **Flexibility**: Supports both Zod and Joi validation libraries.
-
 - **Customizable**: Use your preferred validation library without additional boilerplate.
-
 - **Lightweight**: Only includes the validation logic you need, keeping your bundle size small.

@@ -1,6 +1,6 @@
 {
   "name": "formik-validation-adaptors",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kom50/formik-validation-adapters.git"
+    "url": "git+https://github.com/kom50/formik-validation-adapters.git"
   },
   "keywords": [
     "formik",
