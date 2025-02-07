@@ -10,7 +10,7 @@ npm i formik-validation-adaptors
 
 ## Live Demo
 
-[![Live Demo](https://img.shields.io/badge/demo-live-green)](https://stackblitz.com/edit/vitejs-vite-3vwtnro2?file=src%2FFormikValidationWithZod.tsx)
+[![Live Demo](https://img.shields.io/badge/demo-live-green)](https://stackblitz.com/edit/vitejs-vite-vvbccumy?file=src%2FFormikValidationWithZod.tsx)
 
 ## Features
 
