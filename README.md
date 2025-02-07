@@ -5,14 +5,12 @@ A lightweight utility package that provides validation adaptors for Formik using
 ## Installation
 
 ```bash
-npm install formik-zod-validator zod
+npm i formik-validation-adaptors
 ```
 
-or
+## Live Demo
 
-```bash
-yarn add formik-validation-adaptors
-```
+[![Live Demo](https://img.shields.io/badge/demo-live-green)](https://stackblitz.com/edit/vitejs-vite-3vwtnro2?file=src%2FFormikValidationWithZod.tsx)
 
 ## Features
 
@@ -28,7 +26,7 @@ yarn add formik-validation-adaptors
 Validate Formik forms using Zod schemas.
 
 ```js
-import { formikZodValidator } from "formik-zod-validator";
+import { formikZodValidator } from "formik-validation-adaptors";
 import { z } from "zod";
 import { Formik, Form, Field } from "formik";
 
@@ -42,7 +40,7 @@ const initialValues = {
   email: "",
 };
 
-const MyForm = () => (
+const FormikValidationWithZod = () => (
   <Formik
     initialValues={initialValues}
     validate={formikZodValidator(schema)}
@@ -54,11 +52,14 @@ const MyForm = () => (
         {errors.name && <div>{errors.name}</div>}
         <Field name="email" />
         {errors.email && <div>{errors.email}</div>}
+        <br />
         <button type="submit">Submit</button>
       </Form>
     )}
   </Formik>
 );
+
+export default FormikValidationWithZod;
 ```
 
 #### Joi Adaptor
@@ -88,7 +89,7 @@ const initialValues = {
   email: "",
 };
 
-const MyForm = () => (
+const FormikValidationWithJoi = () => (
   <Formik
     initialValues={initialValues}
     validate={formikJoiValidator(schema)}
@@ -105,6 +106,8 @@ const MyForm = () => (
     )}
   </Formik>
 );
+
+export default FormikValidationWithJoi;
 ```
 
 ## Why Use This Package?
