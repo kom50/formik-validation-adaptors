@@ -1,0 +1,59 @@
+name: Publish to npm
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "package.json"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: "https://registry.npmjs.org/"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Check if Version Changed
+        id: version-check
+        run: |
+          git fetch --tags
+          LATEST_VERSION=$(git tag --sort=-v:refname | head -n 1)
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "Latest Git Tag: $LATEST_VERSION"
+          echo "Current package.json Version: $CURRENT_VERSION"
+
+          if [ "$LATEST_VERSION" != "v$CURRENT_VERSION" ]; then
+            echo "Version has changed. Proceeding with build and publish."
+            echo "publish=true" >> $GITHUB_ENV
+          else
+            echo "No version change. Skipping build and publish."
+            echo "publish=false" >> $GITHUB_ENV
+          fi
+
+      - name: Build Package
+        if: env.publish == 'true'
+        run: npm run build
+
+      - name: Publish to npm
+        if: env.publish == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Git Tag
+        if: env.publish == 'true'
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          git tag v$CURRENT_VERSION
+          git push origin v$CURRENT_VERSION

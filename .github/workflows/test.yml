@@ -1,12 +1,21 @@
-name: Run Tests Cases
+name: Run Test Cases
 
 on:
   push:
     branches:
       - main
+    # This will trigger the workflow only if the following files are changed
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "package.json"
   pull_request:
     branches:
       - main
+    paths:
+      - "lib/**"
+      - "test/**"
+      - "package.json"
 
 jobs:
   test:
