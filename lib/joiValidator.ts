@@ -1,3 +1,4 @@
+import { formatValidationErrors } from "./utils.js";
 import { Schema } from "joi";
 
 /**
@@ -28,17 +29,7 @@ const formikJoiValidator = (schema: Schema) => {
         allowUnknown: true,
       });
 
-      if (!error) return {};
-
-      const validationErrors: Record<string, string> = error.details.reduce(
-        (acc: Record<string, string>, err) => {
-          if (err.path.length > 0) acc[err.path.join(".")] = err.message;
-          return acc;
-        },
-        {}
-      );
-
-      return validationErrors;
+      return error ? formatValidationErrors(error.details) : {};
     } catch (err) {
       return {};
     }

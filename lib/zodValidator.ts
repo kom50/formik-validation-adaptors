@@ -1,4 +1,5 @@
 import { ZodError, ZodTypeAny } from "zod";
+import { formatValidationErrors } from "./utils.js";
 
 /**
  * A Formik-compatible validation function using Zod schema.
@@ -27,13 +28,7 @@ const formikZodValidator = (schema: ZodTypeAny) => {
       await schema.parseAsync(values);
       return {};
     } catch (error) {
-      if (error instanceof ZodError) {
-        const er = error.errors.reduce((acc: Record<string, string>, err) => {
-          if (err.path.length > 0) acc[err.path.join(".")] = err.message;
-          return acc;
-        }, {});
-        return er;
-      }
+      if (error instanceof ZodError) return formatValidationErrors(error.errors);
       return {};
     }
   };
