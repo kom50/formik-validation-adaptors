@@ -27,13 +27,19 @@ jobs:
       - name: Check if Version Changed
         id: version-check
         run: |
-          git fetch --tags
-          LATEST_VERSION=$(git tag --sort=-v:refname | head -n 1)
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          echo "Latest Git Tag: $LATEST_VERSION"
-          echo "Current package.json Version: $CURRENT_VERSION"
+          git fetch --tags --force
 
-          if [ "$LATEST_VERSION" != "v$CURRENT_VERSION" ]; then
+          # Fetch the latest version tag and remove "v" prefix if it exists
+          LATEST_VERSION=$(git tag --sort=-v:refname | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 | sed 's/^v//')
+
+          # Get the version from package.json
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+
+          echo "Latest Git Tag: v$LATEST_VERSION"
+          echo "Current package.json Version: v$CURRENT_VERSION"
+
+          # Compare versions
+          if [ "$LATEST_VERSION" != "$CURRENT_VERSION" ]; then
             echo "Version has changed. Proceeding with build and publish."
             echo "publish=true" >> $GITHUB_ENV
           else

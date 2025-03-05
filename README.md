@@ -110,6 +110,62 @@ const FormikValidationWithJoi = () => (
 export default FormikValidationWithJoi;
 ```
 
+#### Vest Adaptor
+
+Validate Formik forms using Vest, a unit-testing-style validation framework.
+
+```js
+import { formikVestValidator } from "formik-validation-adaptors";
+import { create, test, enforce } from "vest";
+import { Formik, Form, Field } from "formik";
+
+// Define a Vest validation suite
+const suite = create((data) => {
+  test("name", "Name is required", () => {
+    enforce(data.name).isNotEmpty();
+  });
+
+  test("email", "Invalid email format", () => {
+    enforce(data.email).matches(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/);
+  });
+
+  test("password", "Password must be at least 6 characters", () => {
+    enforce(data.password).longerThanOrEquals(6);
+  });
+});
+
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
+
+const FormikValidationWithVest = () => (
+  <Formik
+    initialValues={initialValues}
+    validate={formikVestValidator(suite)}
+    onSubmit={(values) => console.log(values)}
+  >
+    {({ errors }) => (
+      <Form>
+        <Field name="name" placeholder="Name" />
+        {errors.name && <div>{errors.name}</div>}
+
+        <Field name="email" placeholder="Email" />
+        {errors.email && <div>{errors.email}</div>}
+
+        <Field name="password" type="password" placeholder="Password" />
+        {errors.password && <div>{errors.password}</div>}
+
+        <button type="submit">Submit</button>
+      </Form>
+    )}
+  </Formik>
+);
+
+export default FormikValidationWithVest;
+```
+
 ## Why Use This Package?
 
 - **Seamless Integration**: Easily integrate Zod or Joi validation with Formik.

@@ -94,3 +94,76 @@ describe("formikZodValidator", () => {
     });
   });
 });
+
+// Define schema for an array of objects
+const arraySchema = z.array(
+  z.object({
+    name: z.string().min(3, "Name must be at least 3 characters"),
+    email: z.string().email("Invalid email address"),
+  })
+);
+
+describe("formikZodValidator - Array of Objects", () => {
+  it("should return an empty object for an array of valid objects", async () => {
+    const validate = formikZodValidator(arraySchema);
+    const values = [
+      { name: "Alice", email: "alice@example.com" },
+      { name: "Bob", email: "bob@example.com" },
+    ];
+
+    const errors = await validate(values);
+    expect(errors).toEqual({});
+  });
+
+  it("should return errors for an array with invalid objects", async () => {
+    const validate = formikZodValidator(arraySchema);
+    const values = [
+      { name: "Al", email: "invalid-email" }, // Invalid entry
+      { name: "", email: "bob@invalid" }, // Invalid entry
+    ];
+
+    const errors = await validate(values);
+    expect(errors).toEqual({
+      "0.name": "Name must be at least 3 characters",
+      "0.email": "Invalid email address",
+      "1.name": "Name must be at least 3 characters",
+      "1.email": "Invalid email address",
+    });
+  });
+
+  it("should return errors for an array with mixed valid and invalid objects", async () => {
+    const validate = formikZodValidator(arraySchema);
+    const values = [
+      { name: "Valid Name", email: "valid@example.com" }, // Valid
+      { name: "Jo", email: "invalid-email" }, // Invalid
+    ];
+
+    const errors = await validate(values);
+    expect(errors).toEqual({
+      "1.name": "Name must be at least 3 characters",
+      "1.email": "Invalid email address",
+    });
+  });
+
+  it("should return errors when required fields are missing", async () => {
+    const validate = formikZodValidator(arraySchema);
+    const values = [
+      { name: "", email: "" }, // Missing both fields
+      { name: "Valid Name", email: "valid@example.com" }, // Valid
+    ];
+
+    const errors = await validate(values);
+    expect(errors).toEqual({
+      "0.name": "Name must be at least 3 characters",
+      "0.email": "Invalid email address",
+    });
+  });
+
+  it("should handle empty array input", async () => {
+    const validate = formikZodValidator(arraySchema);
+    const values = [];
+
+    const errors = await validate(values);
+    expect(errors).toEqual({});
+  });
+});
