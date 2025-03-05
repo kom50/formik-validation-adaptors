@@ -10,10 +10,14 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Ensure full history is fetched
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -63,3 +67,5 @@ jobs:
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           git tag v$CURRENT_VERSION
           git push origin v$CURRENT_VERSION
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
