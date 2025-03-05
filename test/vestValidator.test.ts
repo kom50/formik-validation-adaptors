@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { create, test } from "vest";
-import formikVestValidator from "../lib/vestValidator";
+import { formikVestValidator } from "../lib/index";
 
 // Define a Vest validation suite
 const suite = create((data) => {
