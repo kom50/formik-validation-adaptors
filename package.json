@@ -1,6 +1,6 @@
 {
   "name": "formik-validation-adaptors",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "type": "module",
@@ -25,7 +25,7 @@
   ],
   "author": "kom50",
   "license": "ISC",
-  "description": "Lightweight Formik validation adaptors for Zod and Joi",
+  "description": "A lightweight utility to integrate Zod and Joi validation with Formik.",
   "dependencies": {
     "joi": "^17.13.3",
     "vest": "^5.4.6",
