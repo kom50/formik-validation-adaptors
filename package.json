@@ -23,9 +23,9 @@
     "joi",
     "adaptors"
   ],
-  "author": "",
+  "author": "kom50",
   "license": "ISC",
-  "description": "",
+  "description": "Lightweight Formik validation adaptors for Zod and Joi",
   "dependencies": {
     "joi": "^17.13.3",
     "vest": "^5.4.6",
