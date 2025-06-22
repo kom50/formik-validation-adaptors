@@ -173,3 +173,7 @@ export default FormikValidationWithVest;
 - **Flexibility**: Supports both Zod and Joi validation libraries.
 - **Customizable**: Use your preferred validation library without additional boilerplate.
 - **Lightweight**: Only includes the validation logic you need, keeping your bundle size small.
+
+## Author
+
+Maintained by [@kom50](https://github.com/kom50).
