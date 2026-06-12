@@ -27,7 +27,7 @@
   "license": "ISC",
   "description": "A lightweight utility to integrate Zod and Joi validation with Formik.",
   "dependencies": {
-    "joi": "^17.13.3",
+    "joi": "^18.2.1",
     "vest": "^5.4.6",
     "zod": "^3.24.1"
   },
